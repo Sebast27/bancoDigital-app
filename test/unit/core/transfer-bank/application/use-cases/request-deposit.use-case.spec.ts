@@ -1,6 +1,6 @@
+import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { RequestDepositUseCase } from '../../../../../../src/core/transfer-bank/application/use-cases/request-deposit.use-case';
 import { ACCOUNT_REPOSITORY, IAccountRepository } from '../../../../../../src/core/transfer-bank/domain/ports/account-repository.port';
 import { DEPOSIT_REPOSITORY, IDepositRepository } from '../../../../../../src/core/transfer-bank/domain/ports/deposit-repository.port';
@@ -34,6 +34,7 @@ describe('RequestDepositUseCase', () => {
       updateStatus: jest.fn(),
       findPending: jest.fn(),
       completeDeposit: jest.fn(),
+      findAll: jest.fn(),
     };
     module = await Test.createTestingModule({
       providers: [

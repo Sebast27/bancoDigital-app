@@ -1,9 +1,9 @@
+import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
+import { IQueuePort, QUEUE_PORT } from '../../../../../../src/core/transfer-bank/application/ports/queue.port';
 import { ApproveDepositUseCase } from '../../../../../../src/core/transfer-bank/application/use-cases/approve-deposit.use-case';
 import { DEPOSIT_REPOSITORY, IDepositRepository } from '../../../../../../src/core/transfer-bank/domain/ports/deposit-repository.port';
-import { IQueuePort, QUEUE_PORT } from '../../../../../../src/core/transfer-bank/application/ports/queue.port';
 
 describe('ApproveDepositUseCase', () => {
   let useCase: ApproveDepositUseCase;
@@ -37,6 +37,7 @@ describe('ApproveDepositUseCase', () => {
       updateStatus: jest.fn(),
       findPending: jest.fn(),
       completeDeposit: jest.fn(),
+      findAll: jest.fn(),
     };
     queuePort = { add: jest.fn() };
     module = await Test.createTestingModule({
