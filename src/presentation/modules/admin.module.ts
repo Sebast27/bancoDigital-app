@@ -6,18 +6,26 @@ import { UpdateUserUseCase } from '../../core/auth/application/use-cases/update-
 import { USER_REPOSITORY } from '../../core/auth/domain/ports/user-repository.port';
 import { CREATE_ACCOUNT_USE_CASE } from '../../core/transfer-bank/application/ports/create-account.port';
 import { GET_ALL_ACCOUNTS_USE_CASE } from '../../core/transfer-bank/application/ports/get-all-accounts.port';
+import { GET_ALL_DEPOSITS_USE_CASE } from '../../core/transfer-bank/application/ports/get-all-deposits.port';
 import { GET_ALL_TRANSFERS_USE_CASE } from '../../core/transfer-bank/application/ports/get-all-transfers.port';
+import { GET_ALL_WITHDRAWALS_USE_CASE } from '../../core/transfer-bank/application/ports/get-all-withdrawals.port';
 import { UPDATE_ACCOUNT_STATUS_USE_CASE } from '../../core/transfer-bank/application/ports/update-account-status.port';
 import { CreateAccountUseCase } from '../../core/transfer-bank/application/use-cases/create-account.use-case';
 import { GetAllAccountsUseCase } from '../../core/transfer-bank/application/use-cases/get-all-accounts.use-case';
+import { GetAllDepositsUseCase } from '../../core/transfer-bank/application/use-cases/get-all-deposits.use-case';
 import { GetAllTransfersUseCase } from '../../core/transfer-bank/application/use-cases/get-all-transfers.use-case';
+import { GetAllWithdrawalsUseCase } from '../../core/transfer-bank/application/use-cases/get-all-withdrawals.use-case';
 import { UpdateAccountStatusUseCase } from '../../core/transfer-bank/application/use-cases/update-account-status.use-case';
 import { ACCOUNT_REPOSITORY } from '../../core/transfer-bank/domain/ports/account-repository.port';
+import { DEPOSIT_REPOSITORY } from '../../core/transfer-bank/domain/ports/deposit-repository.port';
 import { TRANSACTION_REPOSITORY } from '../../core/transfer-bank/domain/ports/transaction-repository.port';
+import { WITHDRAWAL_REPOSITORY } from '../../core/transfer-bank/domain/ports/withdrawal-repository.port';
 import { PrismaAccountRepository } from '../../infrastructure/adapters/prisma/account-repository.prisma';
+import { PrismaDepositRepository } from '../../infrastructure/adapters/prisma/deposit-repository.prisma';
 import { PrismaModule } from '../../infrastructure/adapters/prisma/prisma.module';
 import { PrismaTransactionRepository } from '../../infrastructure/adapters/prisma/transaction.repository.prisma';
 import { PrismaUserRepository } from '../../infrastructure/adapters/prisma/user-repository.prisma';
+import { PrismaWithdrawalRepository } from '../../infrastructure/adapters/prisma/withdrawal-repository.prisma';
 import { AdminController } from '../controllers/admin.controller';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { RolesGuard } from '../guards/roles.guard';
@@ -34,6 +42,8 @@ import { AuthModule } from './auth.module';
         { provide: USER_REPOSITORY, useClass: PrismaUserRepository },
         { provide: ACCOUNT_REPOSITORY, useClass: PrismaAccountRepository },
         { provide: TRANSACTION_REPOSITORY, useClass: PrismaTransactionRepository },
+        { provide: DEPOSIT_REPOSITORY, useClass: PrismaDepositRepository },
+        { provide: WITHDRAWAL_REPOSITORY, useClass: PrismaWithdrawalRepository },
 
         // Auth use cases
         { provide: GET_USERS_USE_CASE, useClass: GetUsersUseCase },
@@ -44,6 +54,10 @@ import { AuthModule } from './auth.module';
         { provide: UPDATE_ACCOUNT_STATUS_USE_CASE, useClass: UpdateAccountStatusUseCase },
         { provide: GET_ALL_TRANSFERS_USE_CASE, useClass: GetAllTransfersUseCase },
         { provide: GET_ALL_ACCOUNTS_USE_CASE, useClass: GetAllAccountsUseCase },
+        { provide: GET_ALL_DEPOSITS_USE_CASE, useClass: GetAllDepositsUseCase },
+        { provide: GET_ALL_WITHDRAWALS_USE_CASE, useClass: GetAllWithdrawalsUseCase },
+
+
 
         // Guards
         JwtAuthGuard,

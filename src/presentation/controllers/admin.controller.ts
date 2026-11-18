@@ -1,3 +1,5 @@
+import { GET_ALL_DEPOSITS_USE_CASE, IGetAllDepositsUseCase } from '@/core/transfer-bank/application/ports/get-all-deposits.port';
+import { GET_ALL_WITHDRAWALS_USE_CASE, IGetAllWithdrawalsUseCase } from '@/core/transfer-bank/application/ports/get-all-withdrawals.port';
 import { Body, Controller, Get, Inject, Logger, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UpdateUserDto } from '../../core/auth/application/dto/update-user.dto';
@@ -34,6 +36,10 @@ export class AdminController {
     private readonly updateUserUseCase: IUpdateUserUseCase,
     @Inject(UPDATE_ACCOUNT_STATUS_USE_CASE)
     private readonly updateAccountStatusUseCase: IUpdateAccountStatusUseCase,
+    @Inject(GET_ALL_DEPOSITS_USE_CASE)
+    private readonly getAllDepositsUseCase: IGetAllDepositsUseCase,
+    @Inject(GET_ALL_WITHDRAWALS_USE_CASE)
+    private readonly getAllWithdrawalsUseCase: IGetAllWithdrawalsUseCase,
   ) { }
 
   // ============================================
@@ -104,5 +110,17 @@ export class AdminController {
   async updateUser(@Param('id') id: string, @Body() dto: UpdateUserDto) {
     this.logger.log(`🔍 Admin actualizando usuario ${id}`);
     return this.updateUserUseCase.execute(id, dto);
+  }
+
+  @Get('deposits')
+  @ApiOperation({ summary: 'Listar TODOS los depósitos (ADMIN)' })
+  async getAllDeposits() {
+    return this.getAllDepositsUseCase.execute();
+  }
+
+  @Get('withdrawals')
+  @ApiOperation({ summary: 'Listar TODOS los retiros (ADMIN)' })
+  async getAllWithdrawals() {
+    return this.getAllWithdrawalsUseCase.execute();
   }
 }

@@ -36,6 +36,19 @@ export interface IDepositRepository {
     };
   } | null>;
 
+  findAll(): Promise<Array<{
+    id: string;
+    accountNumber: string;
+    amount: number;
+    status: string;
+    requestedBy: string;
+    approvedBy: string | null;
+    reference: string | null;
+    createdAt: Date;
+    approvedAt: Date | null;
+    completedAt: Date | null;
+  }>>;
+
   updateStatus(id: string, status: string, approvedBy?: string): Promise<void>;
 
   findPending(): Promise<any[]>;

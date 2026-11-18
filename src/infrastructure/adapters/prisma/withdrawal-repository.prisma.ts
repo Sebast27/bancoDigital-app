@@ -51,6 +51,27 @@ export class PrismaWithdrawalRepository implements IWithdrawalRepository {
     };
   }
 
+  async findAll() {
+    const withdrawals = await this.prisma.withdrawal.findMany({
+      include: {
+        account: {
+          select: { accountNumber: true, userId: true },
+        },
+      },
+    });
+
+    return withdrawals.map((withdrawal) => ({
+      id: withdrawal.id,
+      accountNumber: withdrawal.account.accountNumber,
+      amount: withdrawal.amount,
+      status: withdrawal.status,
+      requestedBy: withdrawal.account.userId,
+      reference: withdrawal.reference,
+      createdAt: withdrawal.createdAt,
+      completedAt: withdrawal.completedAt,
+    }));
+  }
+
   async findByIdWithAccount(id: string) {
     const withdrawal = await this.prisma.withdrawal.findUnique({
       where: { id },
