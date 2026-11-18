@@ -22,6 +22,17 @@ export interface IWithdrawalRepository {
     accountUserId: string;
   } | null>;
 
+  findAll(): Promise<Array<{
+    id: string;
+    accountNumber: string;
+    amount: number;
+    status: string;
+    requestedBy: string;
+    reference: string | null;
+    createdAt: Date;
+    completedAt: Date | null;
+  }>>;
+
   // Datos de cuenta y usuario (para el Worker)
   findByIdWithAccount(id: string): Promise<{
     id: string;

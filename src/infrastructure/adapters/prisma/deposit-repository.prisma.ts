@@ -66,6 +66,29 @@ export class PrismaDepositRepository implements IDepositRepository {
     };
   }
 
+  async findAll() {
+    const deposits = await this.prisma.deposit.findMany({
+      include: {
+        account: {
+          select: { accountNumber: true },
+        },
+      },
+    });
+
+    return deposits.map((d) => ({
+      id: d.id,
+      accountNumber: d.account.accountNumber,
+      amount: d.amount,
+      status: d.status,
+      requestedBy: d.requestedBy,
+      approvedBy: d.approvedBy,
+      reference: d.reference,
+      createdAt: d.createdAt,
+      approvedAt: d.approvedAt,
+      completedAt: d.completedAt,
+    }));
+  }
+
   async updateStatus(id: string, status: string, approvedBy?: string): Promise<void> {
     await this.prisma.deposit.update({
       where: { id },

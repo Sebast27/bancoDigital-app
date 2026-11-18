@@ -1,6 +1,6 @@
+import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { GetWithdrawalStatusUseCase } from '../../../../../../src/core/transfer-bank/application/use-cases/get-withdrawal-status.use-case';
 import { IWithdrawalRepository, WITHDRAWAL_REPOSITORY } from '../../../../../../src/core/transfer-bank/domain/ports/withdrawal-repository.port';
 
@@ -27,6 +27,7 @@ describe('GetWithdrawalStatusUseCase', () => {
       updateStatus: jest.fn(),
       completeWithdrawal: jest.fn(),
       markAsFailed: jest.fn(),
+      findAll: jest.fn(),
     };
     module = await Test.createTestingModule({
       providers: [GetWithdrawalStatusUseCase, { provide: WITHDRAWAL_REPOSITORY, useValue: withdrawalRepository }],

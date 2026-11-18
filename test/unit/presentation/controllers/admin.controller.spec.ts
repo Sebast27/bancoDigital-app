@@ -1,14 +1,16 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
-import { AdminController } from '../../../../src/presentation/controllers/admin.controller';
+import { Test, TestingModule } from '@nestjs/testing';
+import { UserRole } from '../../../../src/core/auth/application/dto/update-user.dto';
 import { GET_USERS_USE_CASE } from '../../../../src/core/auth/application/ports/get-users.port';
 import { UPDATE_USER_USE_CASE } from '../../../../src/core/auth/application/ports/update-user.port';
+import { AccountStatus } from '../../../../src/core/transfer-bank/application/dto/update-account-status.dto';
 import { CREATE_ACCOUNT_USE_CASE } from '../../../../src/core/transfer-bank/application/ports/create-account.port';
 import { GET_ALL_ACCOUNTS_USE_CASE } from '../../../../src/core/transfer-bank/application/ports/get-all-accounts.port';
+import { GET_ALL_DEPOSITS_USE_CASE } from '../../../../src/core/transfer-bank/application/ports/get-all-deposits.port';
 import { GET_ALL_TRANSFERS_USE_CASE } from '../../../../src/core/transfer-bank/application/ports/get-all-transfers.port';
+import { GET_ALL_WITHDRAWALS_USE_CASE } from '../../../../src/core/transfer-bank/application/ports/get-all-withdrawals.port';
 import { UPDATE_ACCOUNT_STATUS_USE_CASE } from '../../../../src/core/transfer-bank/application/ports/update-account-status.port';
-import { AccountStatus } from '../../../../src/core/transfer-bank/application/dto/update-account-status.dto';
-import { UserRole } from '../../../../src/core/auth/application/dto/update-user.dto';
+import { AdminController } from '../../../../src/presentation/controllers/admin.controller';
 
 type UseCaseMock = {
   execute: jest.Mock<(...args: unknown[]) => Promise<unknown>>;
@@ -41,6 +43,8 @@ describe('AdminController', () => {
         { provide: GET_USERS_USE_CASE, useValue: getUsers },
         { provide: UPDATE_USER_USE_CASE, useValue: updateUser },
         { provide: UPDATE_ACCOUNT_STATUS_USE_CASE, useValue: updateAccountStatus },
+        { provide: GET_ALL_DEPOSITS_USE_CASE, useValue: { execute: jest.fn() } },
+        { provide: GET_ALL_WITHDRAWALS_USE_CASE, useValue: { execute: jest.fn() } },
       ],
     }).compile();
     controller = module.get(AdminController);

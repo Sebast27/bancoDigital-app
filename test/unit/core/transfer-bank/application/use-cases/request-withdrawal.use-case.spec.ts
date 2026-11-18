@@ -1,8 +1,8 @@
+import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
-import { RequestWithdrawalUseCase } from '../../../../../../src/core/transfer-bank/application/use-cases/request-withdrawal.use-case';
 import { IQueuePort, QUEUE_PORT } from '../../../../../../src/core/transfer-bank/application/ports/queue.port';
+import { RequestWithdrawalUseCase } from '../../../../../../src/core/transfer-bank/application/use-cases/request-withdrawal.use-case';
 import { ACCOUNT_REPOSITORY, IAccountRepository } from '../../../../../../src/core/transfer-bank/domain/ports/account-repository.port';
 import { IWithdrawalRepository, WITHDRAWAL_REPOSITORY } from '../../../../../../src/core/transfer-bank/domain/ports/withdrawal-repository.port';
 
@@ -37,6 +37,7 @@ describe('RequestWithdrawalUseCase', () => {
       updateStatus: jest.fn(),
       completeWithdrawal: jest.fn(),
       markAsFailed: jest.fn(),
+      findAll: jest.fn(),
     };
     queuePort = { add: jest.fn() };
     module = await Test.createTestingModule({

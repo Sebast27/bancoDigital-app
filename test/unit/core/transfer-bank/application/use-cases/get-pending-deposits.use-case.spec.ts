@@ -1,5 +1,5 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
+import { Test, TestingModule } from '@nestjs/testing';
 import { GetPendingDepositsUseCase } from '../../../../../../src/core/transfer-bank/application/use-cases/get-pending-deposits.use-case';
 import { DEPOSIT_REPOSITORY, IDepositRepository } from '../../../../../../src/core/transfer-bank/domain/ports/deposit-repository.port';
 
@@ -15,6 +15,7 @@ describe('GetPendingDepositsUseCase', () => {
       updateStatus: jest.fn(),
       findPending: jest.fn(),
       completeDeposit: jest.fn(),
+      findAll: jest.fn(),
     };
     module = await Test.createTestingModule({
       providers: [GetPendingDepositsUseCase, { provide: DEPOSIT_REPOSITORY, useValue: depositRepository }],
