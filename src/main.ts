@@ -32,7 +32,7 @@ async function bootstrap() {
 
   // Swagger Configuration
   const config = new DocumentBuilder()
-    .setTitle('Transfer Bank API')
+    .setTitle('Banco Digital API')
     .setDescription('API bancaria con procesamiento asíncrono')
     .setVersion('1.0')
     .addBearerAuth(
@@ -63,7 +63,7 @@ async function bootstrap() {
   app.enableShutdownHooks();
 
   const port = process.env.PORT || 3000;
-  await app.listen(port);
+  await app.listen(port, '0.0.0.0');
 
   logger.log(`🚀 Servidor corriendo en: http://localhost:${port}/api/v1`);
   logger.log(`📚 Swagger UI: http://localhost:${port}/api/docs`);
