@@ -1,3 +1,4 @@
+import { BadRequestException } from '@nestjs/common';
 
 export class Password {
   private readonly value: string;
@@ -13,23 +14,23 @@ export class Password {
 
   private validatePassword(password: string): void {
     if (password.length < 8) {
-      throw new Error('Password must be at least 8 characters long');
+      throw new BadRequestException('Password must be at least 8 characters long');
     }
 
     if (!/[A-Z]/.test(password)) {
-      throw new Error('Password must contain at least one uppercase letter');
+      throw new BadRequestException('Password must contain at least one uppercase letter');
     }
 
     if (!/[a-z]/.test(password)) {
-      throw new Error('Password must contain at least one lowercase letter');
+      throw new BadRequestException('Password must contain at least one lowercase letter');
     }
 
     if (!/[0-9]/.test(password)) {
-      throw new Error('Password must contain at least one number');
+      throw new BadRequestException('Password must contain at least one number');
     }
 
     if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
-      throw new Error('Password must contain at least one special character (!@#$%^&*())');
+      throw new BadRequestException('Password must contain at least one special character (!@#$%^&*())');
     }
   }
 
