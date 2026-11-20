@@ -1,9 +1,11 @@
+import { BadRequestException } from "@nestjs/common";
+
 export class Money {
   private readonly value: number;
 
   constructor(value: number) {
     if (value < 0) {
-      throw new Error('The amount cannot be negative.');
+      throw new BadRequestException('The amount cannot be negative.');
     }
     this.value = value;
   }

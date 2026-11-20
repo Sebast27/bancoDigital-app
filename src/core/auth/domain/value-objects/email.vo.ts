@@ -1,3 +1,5 @@
+import { BadRequestException } from '@nestjs/common';
+
 export class Email {
   private readonly value: string;
 
@@ -6,42 +8,37 @@ export class Email {
     this.value = value;
   }
 
-
   private validateEmail(email: string): void {
-
     if (!email.includes('@')) {
-      throw new Error('Email must contain @');
+      throw new BadRequestException('Email must contain @');
     }
 
     const parts = email.split('@');
     if (parts.length !== 2) {
-      throw new Error('Email must be in format: user@domain');
+      throw new BadRequestException('Email must be in format: user@domain');
     }
 
     const localPart = parts[0];
     const domain = parts[1];
 
-
     if (localPart.length < 1) {
-      throw new Error('Email must have a local part before @');
+      throw new BadRequestException('Email must have a local part before @');
     }
-
 
     if (!domain.includes('.')) {
-      throw new Error('Domain must have a valid extension (e.g., .com, .es)');
+      throw new BadRequestException('Domain must have a valid extension (e.g., .com, .es)');
     }
-
 
     const validExtensions = ['.com', '.es', '.org', '.net', '.io', '.dev', '.app', '.edu', '.gov'];
     const hasValidExtension = validExtensions.some(ext => domain.endsWith(ext));
-    if (!hasValidExtension) {
-      throw new Error(`Domain must have a valid extension: ${validExtensions.join(', ')}`);
-    }
 
+    if (!hasValidExtension) {
+      throw new BadRequestException(`Domain must have a valid extension: ${validExtensions.join(', ')}`);
+    }
 
     const domainParts = domain.split('.');
     if (domainParts[0].length < 2) {
-      throw new Error('Domain must have at least 2 characters before the extension');
+      throw new BadRequestException('Domain must have at least 2 characters before the extension');
     }
   }
 
